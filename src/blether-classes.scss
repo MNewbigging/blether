@@ -57,3 +57,25 @@
   text-align: center;
   color: $color-text !important;
 }
+
+@media only screen and (max-width: 600px) {
+  .input {
+    width: 90% !important;
+    height: 40px !important;
+  }
+
+  .label {
+    font-size: $font-size-small !important;
+  }
+
+  .button {
+    &.large {
+      width: 90%;
+    }
+
+    &.medium {
+      width: 90%;
+      font-size: $font-size-small !important;
+    }
+  }
+}
