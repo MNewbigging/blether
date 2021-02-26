@@ -71,11 +71,16 @@
   .button {
     &.large {
       width: 90%;
+      font-size: $font-size-medium !important;
     }
 
     &.medium {
       width: 90%;
       font-size: $font-size-small !important;
     }
+  }
+
+  .bl-home-dialog {
+    height: 45vh !important;
   }
 }

@@ -1,4 +1,3 @@
-import { Drawer } from '@blueprintjs/core';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -56,36 +55,29 @@ export class BLChatMobile extends React.PureComponent<ChatProps> {
 
   private renderDrawer() {
     const { participant, onExit } = this.props;
+    const drawerOpen = this.drawerOpen ? 'open' : 'closed';
     return (
-      <Drawer
-        size={'80%'}
-        isOpen={this.drawerOpen}
-        canEscapeKeyClose
-        canOutsideClickClose
-        onClose={this.toggleDrawer}
-      >
-        <div className={'drawer-body'}>
-          <div className={'top-bar'}>
-            <div className={'name'}>blether</div>
-            <div className={'exit button small'} onClick={onExit}>
-              exit
-            </div>
-            <div className={'drawer button small'} onClick={this.toggleDrawer}>
-              ...
-            </div>
+      <div className={'drawer-body ' + drawerOpen}>
+        <div className={'top-bar'}>
+          <div className={'name'}>blether</div>
+          <div className={'exit button small'} onClick={onExit}>
+            exit
           </div>
-          <div className={'participants'}>{this.renderParticipants()}</div>
-          <div className={'chat-id'}>
-            <div className={'id-box'}>
-              <div className={'label'}>Invite others to join:</div>
-              <input id={'id'} readOnly className={'id input'} value={participant.hostId} />
-              <div className={'button small'} onClick={() => this.copyChatId()}>
-                Copy to clipboard
-              </div>
+          <div className={'drawer button small'} onClick={this.toggleDrawer}>
+            ...
+          </div>
+        </div>
+        <div className={'participants'}>{this.renderParticipants()}</div>
+        <div className={'chat-id'}>
+          <div className={'id-box'}>
+            <div className={'label'}>Invite others to join:</div>
+            <input id={'id'} readOnly className={'id input'} value={participant.hostId} />
+            <div className={'button small'} onClick={() => this.copyChatId()}>
+              Copy to clipboard
             </div>
           </div>
         </div>
-      </Drawer>
+      </div>
     );
   }
 
