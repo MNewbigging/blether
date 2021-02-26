@@ -19,7 +19,12 @@ export abstract class BLParticipant {
     this.name = name;
 
     this.peer = new Peer({
-      config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] },
+      config: {
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'turn:numb.viagenie.ca', credential: 'muazkh', username: 'webrtc@live.com' },
+        ],
+      },
     });
     this.peer.on('open', (id: string) => {
       console.log('my id is: ', id);
