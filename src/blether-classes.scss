@@ -1,0 +1,59 @@
+@import './blether-variables.scss';
+
+.button {
+  border: 1px solid $color-main-border;
+  border-radius: 100px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all linear 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 5px $color-black-shadow;
+  }
+
+  &:active {
+    box-shadow: 0px 0px 10px $color-black-shadow;
+  }
+
+  &.inactive {
+    background-color: $color-button-inactive;
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
+  &.large {
+    width: 50%;
+    height: 25%;
+    margin-top: 5%;
+    font-size: $font-size-large;
+  }
+
+  &.medium {
+    height: 15%;
+    white-space: pre-wrap;
+    padding: 12px 10% 12px 10%;
+    font-size: $font-size-medium;
+  }
+
+  &.small {
+    width: auto;
+    height: auto;
+    font-size: $font-size-small;
+  }
+
+  &.minimal {
+    border: none;
+    &:hover {
+      box-shadow: 0px 0px 2px $color-black-shadow;
+    }
+  }
+}
+
+.input {
+  text-align: center;
+  color: $color-text !important;
+}
