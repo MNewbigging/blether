@@ -17,13 +17,12 @@ export abstract class BLParticipant {
 
   constructor(name: string, onError: (err: any) => void) {
     this.name = name;
-
+    //  { urls: 'turn:numb.viagenie.ca', credential: 'muazkh', username: 'webrtc@live.com' },
     this.peer = new Peer({
       config: {
         iceServers: [
           { urls: 'stun:stun.l.google.com:19302' },
           { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
-          { urls: 'turn:numb.viagenie.ca', credential: 'muazkh', username: 'webrtc@live.com' },
         ],
       },
     });
