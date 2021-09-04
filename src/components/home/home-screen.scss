@@ -1,33 +1,53 @@
+@import '../common/blether-variables.scss';
+
 .home-screen {
   width: 100%;
   height: 100%;
+
+  background-color: $lightMainBackground;
+  color: $lightMainTextColor;
+  transition: all 0.3s linear;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
+  &.dark {
+    background-color: $darkMainBackground;
+    color: $darkMainTextColor;
+
+    .logo {
+      color: $darkMainTextColor;
+    }
+  }
+
   .logo {
     font-size: 5rem;
+    color: $lightMainTextColor;
+    font-family: $titleTextFont;
   }
 
   .name {
     margin-top: 50px;
-    font-size: 1.8rem;
+    font-size: 2rem;
+    font-family: $regularTextFont;
     display: flex;
     align-items: center;
   }
 
   .settings {
     margin-top: 50px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     text-decoration: underline;
     cursor: pointer;
+    font-family: $regularTextFont;
   }
 
   .start-button {
     margin-top: 50px;
-    width: 160px;
+    width: 180px;
     height: 40px;
+    font-size: 1.4rem;
   }
 }

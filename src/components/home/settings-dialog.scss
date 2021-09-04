@@ -1,12 +1,16 @@
+@import '../common/blether-variables.scss';
+
 .settings-dialog {
   z-index: 10;
   position: absolute;
   width: 500px;
   height: 530px;
-  margin-top: 600px;
-  border: 1px solid black;
-  background-color: white;
-  transition: transform 0.3s linear;
+  border-radius: 30px;
+  background-color: $lightAltBackground;
+  color: $lightAltTextColor;
+  font-family: $regularTextFont;
+
+  transition: transform 0.5s;
 
   display: flex;
   flex-direction: column;
@@ -15,10 +19,12 @@
 
   &.open {
     transform: translateY(0px);
+    transition-timing-function: $animInCurve;
   }
 
   &.closed {
-    transform: translateY(-2000px);
+    transform: translateY(-1000px);
+    transition-timing-function: $animOutCurve;
   }
 
   .title {
@@ -29,6 +35,10 @@
     margin-top: 30px;
   }
 
+  .label {
+    font-size: 1.2rem;
+  }
+
   .name-input {
     display: flex;
 
@@ -36,6 +46,8 @@
       margin-left: 5px;
       width: 200px;
       text-align: center;
+      font-size: 1.2rem;
+      font-family: $regularTextFont;
     }
   }
 
@@ -47,7 +59,7 @@
     align-items: center;
 
     .current-icon {
-      width: 100px;
+      width: 110px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -71,7 +83,7 @@
 
   .theme-toggle {
     margin-top: 50px;
-    width: 150px;
+    width: 300px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -89,7 +101,7 @@
 
         &:checked {
           + .slider {
-            background-color: #2196f3;
+            background-color: $lightMainBackground;
             &::before {
               transform: translateX(26px);
             }
@@ -104,7 +116,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #ccc;
+        background-color: $darkMainBackground;
         transition: 0.4s;
         border-radius: 34px;
 
@@ -128,5 +140,6 @@
     height: 30px;
     margin-top: 40px;
     border-radius: 5px;
+    font-size: 1.2rem;
   }
 }

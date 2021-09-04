@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap');
+
+$regularTextFont: 'Poppins', sans-serif;
+$titleTextFont: 'Comfortaa', cursive;
+
+$animInCurve: cubic-bezier(0.175, 0.885, 0.32, 1.05);
+$animOutCurve: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+// Light theme
+$lightMainBackground: #ebebeb;
+$lightMainTextColor: #1f1f1f;
+
+$lightAltBackground: #fff;
+$lightAltTextColor: black;
+
+$lightButtonBgColor: rgb(137, 42, 226);
+$lightButtonTextColor: white;
+
+// Dark theme
+$darkMainBackground: #59488b;
+$darkMainTextColor: #fff;

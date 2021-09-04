@@ -21,7 +21,7 @@ export class SettingsDialog extends React.Component<Props> {
 
     return (
       <div className={'settings-dialog ' + dialogState}>
-        <div className={'title'}>Settings</div>
+        {/* <div className={'title'}>Settings</div> */}
 
         {this.renderNameInput()}
 
@@ -39,7 +39,7 @@ export class SettingsDialog extends React.Component<Props> {
 
     return (
       <div className={'setting name-input'}>
-        <div>Name</div>
+        <div className={'label'}>Name</div>
         <input
           type={'text'}
           value={settings.name}
@@ -57,7 +57,7 @@ export class SettingsDialog extends React.Component<Props> {
     return (
       <div className={'setting icon-picker'}>
         <div className={'current-icon'}>
-          <div>Icon</div>
+          <div className={'label'}>Icon</div>
           <Icon name={settings.icon} interactive={false} />
         </div>
 
@@ -83,12 +83,12 @@ export class SettingsDialog extends React.Component<Props> {
 
     return (
       <div className={'setting theme-toggle'}>
-        <div>dark</div>
+        <div>dark mode</div>
         <label className={'switch'}>
           <input type={'checkbox'} checked={checked} onChange={() => settings.toggleTheme()} />
           <span className={'slider'}></span>
         </label>
-        <div>light</div>
+        <div>light mode</div>
       </div>
     );
   }

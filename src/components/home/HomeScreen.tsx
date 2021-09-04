@@ -16,11 +16,13 @@ export class HomeScreen extends React.Component<Props> {
   public render() {
     const { bState } = this.props;
 
+    const theme = bState.settings.theme;
+
     const icon = bState.settings.icon;
     const name = bState.settings.name;
 
     return (
-      <div className={'home-screen'}>
+      <div className={'home-screen ' + theme}>
         <div className={'logo'}>blether</div>
 
         <div className={'name'}>
@@ -28,11 +30,11 @@ export class HomeScreen extends React.Component<Props> {
           <div>{name}</div>
         </div>
 
+        <Button className={'start-button'} text={'start a blether'} onClick={() => {}} />
+
         <div className={'settings'} onClick={() => bState.openSettings()}>
           settings
         </div>
-
-        <Button className={'start-button'} text={'start a blether'} onClick={() => {}} />
 
         <SettingsDialog
           dialogState={bState.settingsDialogState}
