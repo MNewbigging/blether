@@ -22,6 +22,10 @@ export class BletherState {
     this.loadSettings();
   }
 
+  @action public openSettings() {
+    this.settingsDialogState = DialogState.OPEN;
+  }
+
   @action public saveSettings() {
     // Save settings to local storage
     const data = this.settings.toData();

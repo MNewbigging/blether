@@ -4,14 +4,14 @@
   background-size: contain;
   margin-right: 5px;
   margin-bottom: 5px;
-  padding: 2px;
+  padding: 1px;
 
   &.interactive {
     cursor: pointer;
     border-radius: 50%;
 
     &:hover {
-      border: 2px solid red;
+      border: 1px solid red;
       padding: 0px;
     }
   }

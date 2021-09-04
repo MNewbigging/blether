@@ -7,4 +7,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .logo {
+    font-size: 5rem;
+    margin-top: 20%;
+  }
+
+  .name {
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .settings {
+    font-size: 1.2rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }

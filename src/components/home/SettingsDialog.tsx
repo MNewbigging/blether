@@ -3,6 +3,7 @@ import React from 'react';
 
 import { BletherSettings, BletherTheme } from '../../model/Settings';
 import { DialogState } from '../../state/BletherState';
+import { Button } from '../common/buttons/Button';
 import { Icon } from '../common/icon/Icon';
 
 import './settings-dialog.scss';
@@ -28,9 +29,7 @@ export class SettingsDialog extends React.Component<Props> {
 
         {this.renderThemeToggle()}
 
-        <button className={'save-button'} onClick={() => onSave()}>
-          Save
-        </button>
+        <Button text={'save'} className={'save-button'} onClick={() => onSave()} />
       </div>
     );
   }
