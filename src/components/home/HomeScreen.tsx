@@ -32,7 +32,7 @@ export class HomeScreen extends React.Component<Props> {
           settings
         </div>
 
-        <Button text={'start a blether'} onClick={() => {}} />
+        <Button className={'start-button'} text={'start a blether'} onClick={() => {}} />
 
         <SettingsDialog
           dialogState={bState.settingsDialogState}
