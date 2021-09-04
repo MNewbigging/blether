@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import { BletherSettings } from '../../model/Settings';
+import { BletherSettings, BletherTheme } from '../../model/Settings';
 import { DialogState } from '../../state/BletherState';
 import { Icon } from '../common/icon/Icon';
 
@@ -30,11 +30,7 @@ export class SettingsDialog extends React.Component<Props> {
 
         {this.renderIconPicker()}
 
-        <div>Theme</div>
-        <label className={'switch'}>
-          <input type={'checkbox'} />
-          <span className={'slider round'}></span>
-        </label>
+        {this.renderThemeToggle()}
       </div>
     );
   }
@@ -58,6 +54,23 @@ export class SettingsDialog extends React.Component<Props> {
             />
           ))}
         </div>
+      </>
+    );
+  }
+
+  private renderThemeToggle() {
+    const { settings } = this.props;
+
+    // Checked if light theme
+    const checked = settings.theme === BletherTheme.LIGHT;
+
+    return (
+      <>
+        <div>Theme</div>
+        <label className={'switch'}>
+          <input type={'checkbox'} checked={checked} onChange={() => settings.toggleTheme()} />
+          <span className={'slider'}></span>
+        </label>
       </>
     );
   }

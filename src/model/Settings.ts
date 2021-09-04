@@ -66,4 +66,8 @@ export class BletherSettings {
   @action public setIcon(iconName: IconName) {
     this.icon = iconName;
   }
+
+  @action public toggleTheme() {
+    this.theme = this.theme === BletherTheme.LIGHT ? BletherTheme.DARK : BletherTheme.LIGHT;
+  }
 }
