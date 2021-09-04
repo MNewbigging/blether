@@ -22,8 +22,8 @@ export class HomeScreen extends React.Component<Props> {
     const name = bState.settings.name;
 
     return (
-      <div className={'home-screen ' + theme}>
-        <div className={'logo'}>blether</div>
+      <div className={'home-screen main-ui ' + theme}>
+        <div className={'logo main-ui'}>blether</div>
 
         <div className={'name'}>
           <Icon name={icon} interactive={false} />

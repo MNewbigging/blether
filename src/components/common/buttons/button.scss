@@ -6,8 +6,10 @@
   border-radius: 10px;
   box-sizing: border-box;
 
-  background-color: $lightButtonBgColor;
-  color: $lightButtonTextColor;
+  transition: all 0.3s linear;
+
+  background-color: $buttonBgColor;
+  color: $buttonTextColor;
   font-family: $regularTextFont;
 
   display: flex;
@@ -15,6 +17,15 @@
   justify-content: center;
 
   &:hover {
-    // set bg colour
+    background-color: $buttonBgHover;
+  }
+
+  &.disabled {
+    background-color: $buttonBgDim;
+    color: $buttonTextDim;
+
+    &:hover {
+      background-color: $buttonBgDim;
+    }
   }
 }

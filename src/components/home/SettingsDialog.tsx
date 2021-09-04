@@ -17,7 +17,7 @@ interface Props {
 @observer
 export class SettingsDialog extends React.Component<Props> {
   public render() {
-    const { dialogState, onSave } = this.props;
+    const { dialogState, settings, onSave } = this.props;
 
     return (
       <>
@@ -29,7 +29,12 @@ export class SettingsDialog extends React.Component<Props> {
 
           {this.renderThemeToggle()}
 
-          <Button text={'save'} className={'save-button'} onClick={() => onSave()} />
+          <Button
+            text={'save'}
+            className={'save-button'}
+            onClick={() => onSave()}
+            disabled={!settings.valid}
+          />
         </div>
       </>
     );
@@ -40,7 +45,7 @@ export class SettingsDialog extends React.Component<Props> {
 
     return (
       <div className={'setting name-input'}>
-        <div className={'label'}>Name</div>
+        <div className={'label'}>Name*</div>
         <input
           type={'text'}
           value={settings.name}

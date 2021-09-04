@@ -7,16 +7,29 @@ $titleTextFont: 'Comfortaa', cursive;
 $animInCurve: cubic-bezier(0.175, 0.885, 0.32, 1.05);
 $animOutCurve: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
+// Buttons
+$buttonBgColor: #59488b;
+$buttonBgHover: #7d6bb3;
+$buttonBgDim: #322a50;
+$buttonTextColor: white;
+$buttonTextDim: #dee4e7;
+
 // Light theme
 $lightMainBackground: #dee4e7;
 $lightMainTextColor: #1f1f1f;
 
-$lightAltBackground: #fff;
-$lightAltTextColor: black;
-
-$lightButtonBgColor: #59488b;
-$lightButtonTextColor: white;
-
 // Dark theme
-$darkMainBackground: #37474f; // #59488b;
+$darkMainBackground: #37474f;
 $darkMainTextColor: #fff;
+
+.main-ui {
+  &.light {
+    background-color: $lightMainBackground;
+    color: $lightMainTextColor;
+  }
+
+  &.dark {
+    background-color: $darkMainBackground;
+    color: $darkMainTextColor;
+  }
+}

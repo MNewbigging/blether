@@ -44,6 +44,7 @@ export class BletherSettings {
   @observable public name = '';
   @observable public icon = IconName.BEAR;
   @observable public theme = BletherTheme.LIGHT;
+  @observable public valid = false;
 
   constructor() {
     // Pick a random default icon
@@ -68,10 +69,14 @@ export class BletherSettings {
     this.name = settingsData.name;
     this.icon = settingsData.icon;
     this.theme = settingsData.theme;
+
+    this.validate();
   }
 
   @action public setName(name: string) {
     this.name = name;
+
+    this.validate();
   }
 
   @action public setIcon(iconName: IconName) {
@@ -80,5 +85,10 @@ export class BletherSettings {
 
   @action public toggleTheme() {
     this.theme = this.theme === BletherTheme.LIGHT ? BletherTheme.DARK : BletherTheme.LIGHT;
+  }
+
+  @action private validate() {
+    this.valid = this.name.length > 1;
+    console.log('validated', this.valid);
   }
 }
