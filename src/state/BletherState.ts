@@ -1,5 +1,6 @@
 import { action, observable } from 'mobx';
 import { BletherSettings, SettingsData } from '../model/Settings';
+import { ChatState } from './ChatState';
 
 export enum DialogState {
   OPEN = 'open',
@@ -18,6 +19,7 @@ export class BletherState {
   @observable public screen = BletherScreen.HOME;
   @observable public settings = new BletherSettings();
   @observable public settingsDialogState = DialogState.CLOSED;
+  public chatState?: ChatState;
 
   constructor() {
     this.loadSettings();
@@ -37,6 +39,18 @@ export class BletherState {
     // Then close the dialog
     this.settingsDialogState = DialogState.CLOSING;
     setTimeout(() => (this.settingsDialogState = DialogState.CLOSED), 550);
+  }
+
+  @action public startBlether() {
+    this.chatState = new ChatState(this.settings);
+
+    this.screen = BletherScreen.CHAT;
+  }
+
+  @action public exitBlether() {
+    this.chatState = undefined;
+
+    this.screen = BletherScreen.HOME;
   }
 
   @action private loadSettings() {

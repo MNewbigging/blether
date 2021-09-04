@@ -16,12 +16,16 @@
     font-family: $titleTextFont;
   }
 
-  .name {
+  .icon-name {
     margin-top: 50px;
     font-size: 2rem;
     font-family: $regularTextFont;
     display: flex;
     align-items: center;
+
+    .name {
+      margin-left: 5px;
+    }
   }
 
   .settings {

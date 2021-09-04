@@ -3,10 +3,10 @@ import React from 'react';
 
 import { BletherState } from '../../state/BletherState';
 import { SettingsDialog } from './SettingsDialog';
-
-import './home-screen.scss';
 import { Icon } from '../common/icon/Icon';
 import { Button } from '../common/buttons/Button';
+
+import './home-screen.scss';
 
 interface Props {
   bState: BletherState;
@@ -25,12 +25,16 @@ export class HomeScreen extends React.Component<Props> {
       <div className={'home-screen main-ui ' + theme}>
         <div className={'logo main-ui'}>blether</div>
 
-        <div className={'name'}>
+        <div className={'icon-name'}>
           <Icon name={icon} interactive={false} />
-          <div>{name}</div>
+          <div className={'name'}>{name}</div>
         </div>
 
-        <Button className={'start-button'} text={'start a blether'} onClick={() => {}} />
+        <Button
+          className={'start-button'}
+          text={'start a blether'}
+          onClick={() => bState.startBlether()}
+        />
 
         <div className={'settings'} onClick={() => bState.openSettings()}>
           settings

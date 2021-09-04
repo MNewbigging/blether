@@ -31,5 +31,6 @@ $darkMainTextColor: #fff;
   &.dark {
     background-color: $darkMainBackground;
     color: $darkMainTextColor;
+    border-color: $darkMainTextColor;
   }
 }

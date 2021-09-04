@@ -27,6 +27,9 @@ export enum IconName {
   WALRUS = 'walrus',
   WHALE = 'whale',
   ZEBRA = 'zebra',
+  DOOR = 'door',
+  EXPORT = 'export',
+  LARGER = 'larger',
 }
 
 export enum BletherTheme {
@@ -89,6 +92,5 @@ export class BletherSettings {
 
   @action private validate() {
     this.valid = this.name.length > 1;
-    console.log('validated', this.valid);
   }
 }

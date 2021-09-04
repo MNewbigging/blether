@@ -1,0 +1,91 @@
+@import '../common/blether-variables.scss';
+
+.sidebar {
+  height: 100%;
+  border-right: 1px solid black;
+  box-sizing: border-box;
+
+  transition: all 0.25s $animInCurve;
+
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+
+  &.open {
+    width: 250px;
+
+    .button {
+      width: 120px;
+      height: 40px;
+    }
+  }
+
+  &.closed {
+    width: 60px;
+
+    .button {
+      width: 40px;
+      height: 40px;
+      font-size: 0.7rem;
+
+      .icon {
+        width: 30px;
+        height: 30px;
+        margin: 0;
+      }
+    }
+  }
+
+  .top-section {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    padding-bottom: 20px;
+  }
+
+  .mid-section {
+    flex: 1 1 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    .participant {
+      font-family: $regularTextFont;
+      font-size: 1.3rem;
+      margin-top: 5px;
+
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      overflow: hidden;
+
+      .icon {
+        flex: 0 0 50px;
+        margin: 0;
+        margin-left: 2px;
+      }
+
+      .name {
+        flex: 1 1 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        box-sizing: border-box;
+        padding-left: 5px;
+      }
+    }
+  }
+
+  .bot-section {
+    flex: 0 0 auto;
+  }
+
+  .button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+
+    transition: all 0.25s $animInCurve;
+  }
+}
