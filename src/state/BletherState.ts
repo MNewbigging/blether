@@ -22,6 +22,17 @@ export class BletherState {
     this.loadSettings();
   }
 
+  @action public saveSettings() {
+    // Save settings to local storage
+    const data = this.settings.toData();
+    const json = JSON.stringify(data);
+
+    localStorage.setItem(settingsKey, json);
+
+    // Then close the dialog
+    this.settingsDialogState = DialogState.CLOSED;
+  }
+
   @action private loadSettings() {
     // Grab any stored settings from local storage
     const settings = localStorage.getItem(settingsKey);

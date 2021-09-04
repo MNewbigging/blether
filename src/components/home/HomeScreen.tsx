@@ -17,7 +17,11 @@ export class HomeScreen extends React.Component<Props> {
     return (
       <div className={'home-screen'}>
         <div className={'logo'}>blether</div>
-        <SettingsDialog dialogState={bState.settingsDialogState} settings={bState.settings} />
+        <SettingsDialog
+          dialogState={bState.settingsDialogState}
+          settings={bState.settings}
+          onSave={() => bState.saveSettings()}
+        />
       </div>
     );
   }

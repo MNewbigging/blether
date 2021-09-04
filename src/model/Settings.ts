@@ -46,7 +46,18 @@ export class BletherSettings {
   @observable public theme = BletherTheme.LIGHT;
 
   constructor() {
-    // TODO - pick a random default icon
+    // Pick a random default icon
+    const icons = this.getIconOptions();
+    const rnd = Math.floor(Math.random() * icons.length);
+    this.icon = icons[rnd];
+  }
+
+  public toData(): SettingsData {
+    return {
+      name: this.name,
+      icon: this.icon,
+      theme: this.theme,
+    };
   }
 
   public getIconOptions() {

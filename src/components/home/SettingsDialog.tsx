@@ -10,27 +10,42 @@ import './settings-dialog.scss';
 interface Props {
   dialogState: DialogState;
   settings: BletherSettings;
+  onSave: () => void;
 }
 
 @observer
 export class SettingsDialog extends React.Component<Props> {
   public render() {
-    const { dialogState, settings } = this.props;
+    const { dialogState, onSave } = this.props;
 
     return (
       <div className={'settings-dialog ' + dialogState}>
-        <div>Settings</div>
+        <div className={'title'}>Settings</div>
 
+        {this.renderNameInput()}
+
+        {this.renderIconPicker()}
+
+        {this.renderThemeToggle()}
+
+        <button className={'save-button'} onClick={() => onSave()}>
+          Save
+        </button>
+      </div>
+    );
+  }
+
+  private renderNameInput() {
+    const { settings } = this.props;
+
+    return (
+      <div className={'setting name-input'}>
         <div>Name</div>
         <input
           type={'text'}
           value={settings.name}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => settings.setName(e.target.value)}
         />
-
-        {this.renderIconPicker()}
-
-        {this.renderThemeToggle()}
       </div>
     );
   }
@@ -41,10 +56,13 @@ export class SettingsDialog extends React.Component<Props> {
     const icons = settings.getIconOptions();
 
     return (
-      <>
-        <div>Icon</div>
-        <Icon name={settings.icon} interactive={false} />
-        <div className={'icon-picker'}>
+      <div className={'setting icon-picker'}>
+        <div className={'current-icon'}>
+          <div>Icon</div>
+          <Icon name={settings.icon} interactive={false} />
+        </div>
+
+        <div className={'icons-select'}>
           {icons.map((iconName) => (
             <Icon
               key={'icon-' + iconName}
@@ -54,7 +72,7 @@ export class SettingsDialog extends React.Component<Props> {
             />
           ))}
         </div>
-      </>
+      </div>
     );
   }
 
@@ -65,13 +83,14 @@ export class SettingsDialog extends React.Component<Props> {
     const checked = settings.theme === BletherTheme.LIGHT;
 
     return (
-      <>
-        <div>Theme</div>
+      <div className={'setting theme-toggle'}>
+        <div>dark</div>
         <label className={'switch'}>
           <input type={'checkbox'} checked={checked} onChange={() => settings.toggleTheme()} />
           <span className={'slider'}></span>
         </label>
-      </>
+        <div>light</div>
+      </div>
     );
   }
 }
