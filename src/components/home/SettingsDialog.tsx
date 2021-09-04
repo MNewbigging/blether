@@ -31,6 +31,10 @@ export class SettingsDialog extends React.Component<Props> {
         {this.renderIconPicker()}
 
         <div>Theme</div>
+        <label className={'switch'}>
+          <input type={'checkbox'} />
+          <span className={'slider round'}></span>
+        </label>
       </div>
     );
   }
