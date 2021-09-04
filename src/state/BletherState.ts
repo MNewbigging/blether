@@ -3,6 +3,7 @@ import { BletherSettings, SettingsData } from '../model/Settings';
 
 export enum DialogState {
   OPEN = 'open',
+  CLOSING = 'closing',
   CLOSED = 'closed',
 }
 
@@ -34,7 +35,8 @@ export class BletherState {
     localStorage.setItem(settingsKey, json);
 
     // Then close the dialog
-    this.settingsDialogState = DialogState.CLOSED;
+    this.settingsDialogState = DialogState.CLOSING;
+    setTimeout(() => (this.settingsDialogState = DialogState.CLOSED), 550);
   }
 
   @action private loadSettings() {

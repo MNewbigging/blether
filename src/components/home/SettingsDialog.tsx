@@ -20,17 +20,18 @@ export class SettingsDialog extends React.Component<Props> {
     const { dialogState, onSave } = this.props;
 
     return (
-      <div className={'settings-dialog ' + dialogState}>
-        {/* <div className={'title'}>Settings</div> */}
+      <>
+        <div className={'dialog-overlay ' + dialogState}></div>
+        <div className={'settings-dialog ' + dialogState}>
+          {this.renderNameInput()}
 
-        {this.renderNameInput()}
+          {this.renderIconPicker()}
 
-        {this.renderIconPicker()}
+          {this.renderThemeToggle()}
 
-        {this.renderThemeToggle()}
-
-        <Button text={'save'} className={'save-button'} onClick={() => onSave()} />
-      </div>
+          <Button text={'save'} className={'save-button'} onClick={() => onSave()} />
+        </div>
+      </>
     );
   }
 
