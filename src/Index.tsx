@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Blether } from './Blether';
+import { Blether } from './components/Blether';
 
 import './app.scss';
 
