@@ -14,7 +14,7 @@ export class Blether extends React.Component {
 
   public render() {
     if (this.bState.screen === BletherScreen.HOME) {
-      return <HomeScreen />;
+      return <HomeScreen bState={this.bState} />;
     }
 
     return <div>blether</div>;

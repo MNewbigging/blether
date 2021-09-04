@@ -1,3 +1,5 @@
+import { action, observable } from 'mobx';
+
 export enum BletherTheme {
   LIGHT = 'light',
   DARK = 'dark',
@@ -10,7 +12,7 @@ export interface SettingsData {
 }
 
 export class BletherSettings {
-  public name = '';
+  @observable public name = '';
   public icon = '';
   public theme = BletherTheme.LIGHT;
 
@@ -18,5 +20,9 @@ export class BletherSettings {
     this.name = settingsData.name;
     this.icon = settingsData.icon;
     this.theme = settingsData.theme;
+  }
+
+  @action public setName(name: string) {
+    this.name = name;
   }
 }
