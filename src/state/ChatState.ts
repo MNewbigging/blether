@@ -17,4 +17,8 @@ export class ChatState {
   @action public setMessageText(text: string) {
     this.messageText = text;
   }
+
+  public sendMessage() {
+    console.log(this.messageText);
+  }
 }

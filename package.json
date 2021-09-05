@@ -20,8 +20,6 @@
   "license": "MIT",
   "dependencies": {
     "file-loader": "^6.1.0",
-    "jodit": "^3.7.2",
-    "jodit-react-ts": "^0.9.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "react": "^16.13.1",
