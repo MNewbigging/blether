@@ -3,7 +3,7 @@ import { BletherSettings } from '../model/Settings';
 
 export class ChatState {
   @observable public sidebarOpen = true;
-  @observable public messageText = '';
+  @observable public messageText = 'blether away...';
   public userSettings: BletherSettings;
 
   constructor(settings: BletherSettings) {
