@@ -1,6 +1,11 @@
+@import '../common/blether-variables.scss';
+
 .message-panel {
-  flex: 1 1 100%;
+  flex: 1 1;
+  width: calc(100% - $sidebarClosedWidth);
   height: 100%;
 
-  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
