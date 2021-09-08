@@ -18,7 +18,7 @@ export class MessagePanel extends React.Component<Props> {
 
     return (
       <div className={'message-panel'}>
-        <MessageArea />
+        <MessageArea chatState={chatState} />
         <MessageInput chatState={chatState} />
       </div>
     );

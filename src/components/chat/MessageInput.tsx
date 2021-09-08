@@ -1,4 +1,9 @@
+import { EditorState, RawDraftContentState } from 'draft-js';
+import { observer } from 'mobx-react';
 import React from 'react';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import EditorConfig from '../../model/EditorConfig';
 
 import { ChatState } from '../../state/ChatState';
 
@@ -8,10 +13,19 @@ interface Props {
   chatState: ChatState;
 }
 
+@observer
 export class MessageInput extends React.Component<Props> {
   public render() {
     const { chatState } = this.props;
 
-    return <div className={'message-input'}></div>;
+    return (
+      <div className={'message-input'}>
+        <Editor
+          editorState={chatState.editorState}
+          onEditorStateChange={(es: EditorState) => chatState.setEditorState(es)}
+          toolbar={EditorConfig}
+        />
+      </div>
+    );
   }
 }
