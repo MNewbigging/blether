@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import { BletherSettings } from '../../model/Settings';
 import { ChatState } from '../../state/ChatState';
 import { MessagePanel } from './MessagePanel';
 import { Sidebar } from './Sidebar';

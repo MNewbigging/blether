@@ -2,6 +2,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import { ChatState } from '../../state/ChatState';
+import { Message } from './Message';
 
 import './message-area.scss';
 
@@ -15,7 +16,9 @@ export class MessageArea extends React.Component<Props> {
 
     return (
       <div className={'message-area'}>
-        <div dangerouslySetInnerHTML={{ __html: chatState.editorContent }}></div>
+        {chatState.messageHistory.map((msg) => (
+          <Message message={msg} />
+        ))}
       </div>
     );
   }

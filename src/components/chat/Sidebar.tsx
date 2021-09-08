@@ -6,6 +6,7 @@ import { Button } from '../common/buttons/Button';
 
 import './sidebar.scss';
 import '../common/blether-variables.scss';
+
 import { IconName } from '../../model/Settings';
 import { Icon } from '../common/icon/Icon';
 

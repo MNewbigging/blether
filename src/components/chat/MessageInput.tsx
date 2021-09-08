@@ -1,10 +1,10 @@
-import { EditorState, RawDraftContentState } from 'draft-js';
+import { EditorState } from 'draft-js';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import EditorConfig from '../../model/EditorConfig';
 
+import EditorConfig from '../../model/EditorConfig';
 import { ChatState } from '../../state/ChatState';
 
 import './message-input.scss';
