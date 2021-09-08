@@ -22,7 +22,5 @@ export class ChatState {
   @action public setEditorState(editorState: EditorState) {
     this.editorState = editorState;
     this.editorContent = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-
-    console.log('editorContent: ', this.editorContent);
   }
 }

@@ -21,6 +21,9 @@ export class MessageInput extends React.Component<Props> {
     return (
       <div className={'message-input'}>
         <Editor
+          wrapperClassName={'editor-wrapper'}
+          toolbarClassName={'toolbar'}
+          editorClassName={'editor'}
           editorState={chatState.editorState}
           onEditorStateChange={(es: EditorState) => chatState.setEditorState(es)}
           toolbar={EditorConfig}
