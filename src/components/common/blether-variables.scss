@@ -18,8 +18,10 @@ $buttonTextColor: white;
 $buttonTextDim: #dee4e7;
 
 // Light theme
-$lightMainColor: #dee4e7;
+$lightMainColor: #ebebeb;
 $lightMainTextColor: #1f1f1f;
+$lightSecondaryColor: #c4ced4;
+$lightAccentColor: #dee4e7;
 
 // Dark theme
 $darkMainColor: #37474f;
@@ -42,6 +44,10 @@ $darkBorderColor: #dee4e7;
 }
 
 .secondary-ui {
+  &.light {
+    background-color: $lightSecondaryColor;
+    color: $lightMainTextColor;
+  }
   &.dark {
     background-color: $darkSecondaryColor;
     color: $darkMainTextColor;
@@ -50,14 +56,44 @@ $darkBorderColor: #dee4e7;
 }
 
 .accent-ui {
+  .rdw-option-wrapper {
+    border: none;
+    box-shadow: none;
+    border-radius: 2px 2px 0px 0px;
+  }
+  &.light {
+    background-color: $lightAccentColor;
+    color: $lightMainTextColor;
+
+    .rdw-option-wrapper {
+      background-color: $lightAccentColor;
+      &:hover {
+        background-color: #d1d9de;
+      }
+    }
+    .rdw-option-active {
+      background-color: $lightSecondaryColor;
+      &:hover {
+        background-color: $lightSecondaryColor;
+      }
+    }
+  }
+
   &.dark {
     background-color: $darkAccentColor;
     color: $darkMainTextColor;
-    //border-color: $darkBorderColor;
 
     .rdw-option-wrapper {
       background-color: $darkAccentColor;
-      border-color: black;
+      &:hover {
+        background-color: #6f8d9b;
+      }
+    }
+    .rdw-option-active {
+      background-color: #87a0ab;
+      &:hover {
+        background-color: #87a0ab;
+      }
     }
   }
 }
