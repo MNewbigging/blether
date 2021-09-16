@@ -1,4 +1,4 @@
-import { ContentState, convertToRaw, EditorState, Modifier, SelectionState } from 'draft-js';
+import { convertToRaw, EditorState, Modifier, SelectionState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { action, observable } from 'mobx';
 
@@ -39,6 +39,9 @@ export class ChatState {
     // Send editor content in a new message
     const message: UserMessage = {
       content: this.editorContent,
+      time: JSON.stringify(Date.now()),
+      name: this.userSettings.name,
+      icon: this.userSettings.icon,
     };
 
     // Add own message to message history straight away

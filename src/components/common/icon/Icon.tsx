@@ -6,12 +6,13 @@ import './icon.scss';
 
 interface Props {
   name: IconName;
-  interactive: boolean;
+  interactive?: boolean;
   onClick?: () => void;
 }
 
 export const Icon: React.FC<Props> = observer(({ name, interactive, onClick }) => {
-  const interactiveClass = interactive ? 'interactive' : '';
+  const isInteractive = interactive ?? false;
+  const interactiveClass = isInteractive ? 'interactive' : '';
   const classNames = ['icon', name, interactiveClass];
 
   return (

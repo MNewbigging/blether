@@ -16,8 +16,8 @@ export class MessageArea extends React.Component<Props> {
 
     return (
       <div className={'message-area'}>
-        {chatState.messageHistory.map((msg) => (
-          <Message message={msg} />
+        {chatState.messageHistory.map((msg, idx) => (
+          <Message key={'msg-' + idx} message={msg} />
         ))}
       </div>
     );
