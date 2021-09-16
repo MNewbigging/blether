@@ -130,7 +130,7 @@
 
         &:checked {
           + .slider {
-            background-color: $lightMainBackground;
+            background-color: $lightMainColor;
             &::before {
               transform: translateX(26px);
             }
@@ -145,7 +145,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: $darkMainBackground;
+        background-color: $darkMainColor;
         transition: 0.4s;
         border-radius: 34px;
 

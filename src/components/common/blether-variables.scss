@@ -18,22 +18,46 @@ $buttonTextColor: white;
 $buttonTextDim: #dee4e7;
 
 // Light theme
-$lightMainBackground: #dee4e7;
+$lightMainColor: #dee4e7;
 $lightMainTextColor: #1f1f1f;
 
 // Dark theme
-$darkMainBackground: #37474f;
-$darkMainTextColor: #fff;
+$darkMainColor: #37474f;
+$darkMainTextColor: #dee4e7;
+$darkSecondaryColor: #2a363c;
+$darkAccentColor: #648290;
+$darkBorderColor: #dee4e7;
 
 .main-ui {
   &.light {
-    background-color: $lightMainBackground;
+    background-color: $lightMainColor;
     color: $lightMainTextColor;
   }
 
   &.dark {
-    background-color: $darkMainBackground;
+    background-color: $darkMainColor;
     color: $darkMainTextColor;
-    border-color: $darkMainTextColor;
+    border-color: $darkBorderColor;
+  }
+}
+
+.secondary-ui {
+  &.dark {
+    background-color: $darkSecondaryColor;
+    color: $darkMainTextColor;
+    border-color: $darkBorderColor;
+  }
+}
+
+.accent-ui {
+  &.dark {
+    background-color: $darkAccentColor;
+    color: $darkMainTextColor;
+    //border-color: $darkBorderColor;
+
+    .rdw-option-wrapper {
+      background-color: $darkAccentColor;
+      border-color: black;
+    }
   }
 }

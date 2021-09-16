@@ -22,7 +22,7 @@ export class Sidebar extends React.Component<Props> {
 
     const theme = chatState.userSettings.theme;
     const open = chatState.sidebarOpen ? 'open' : 'closed';
-    const sidebarClasses = ['sidebar', 'main-ui', theme, open];
+    const sidebarClasses = ['sidebar', 'secondary-ui', theme, open];
 
     const exitBtn = chatState.sidebarOpen ? undefined : IconName.DOOR;
     const inviteBtn = chatState.sidebarOpen ? undefined : IconName.EXPORT;

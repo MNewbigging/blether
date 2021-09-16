@@ -14,8 +14,11 @@ export class MessageArea extends React.Component<Props> {
   public render() {
     const { chatState } = this.props;
 
+    const theme = chatState.userSettings.theme;
+    const classNames = ['message-area', 'main-ui', theme];
+
     return (
-      <div className={'message-area'}>
+      <div className={classNames.join(' ')}>
         {chatState.messageHistory.map((msg, idx) => (
           <Message key={'msg-' + idx} message={msg} />
         ))}

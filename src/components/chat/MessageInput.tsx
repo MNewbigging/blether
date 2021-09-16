@@ -24,16 +24,20 @@ export class MessageInput extends React.Component<Props> {
   public render() {
     const { chatState } = this.props;
 
+    const theme = chatState.userSettings.theme;
+
     return (
-      <div className={'message-input'}>
-        <Editor
-          wrapperClassName={'editor-wrapper'}
-          toolbarClassName={'toolbar'}
-          editorClassName={'editor'}
-          editorState={chatState.editorState}
-          onEditorStateChange={(es: EditorState) => chatState.setEditorState(es)}
-          toolbar={EditorConfig}
-        />
+      <div className={'message-input main-ui ' + theme}>
+        <div className={'editor-container'}>
+          <Editor
+            wrapperClassName={'main-ui editor-wrapper ' + theme}
+            toolbarClassName={'toolbar accent-ui ' + theme}
+            editorClassName={'secondary-ui editor ' + theme}
+            editorState={chatState.editorState}
+            onEditorStateChange={(es: EditorState) => chatState.setEditorState(es)}
+            toolbar={EditorConfig}
+          />
+        </div>
       </div>
     );
   }
