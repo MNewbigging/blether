@@ -17,6 +17,23 @@ export class Message extends React.Component<Props> {
 
     return (
       <div className={'message'}>
+        <div className={'left-col'}>
+          <Icon name={message.icon} />
+        </div>
+        <div className={'right-col'}>
+          <div className={'top-row'}>
+            <div className={'name'}>{message.name}</div>
+            <div className={'time'}>{timeStr}</div>
+          </div>
+          <div className={'bot-row'}>
+            <div className={'content'} dangerouslySetInnerHTML={{ __html: message.content }}></div>
+          </div>
+        </div>
+      </div>
+    );
+
+    return (
+      <div className={'message'}>
         <div className={'top-row'}>
           <Icon name={message.icon} />
           <div className={'name'}>{message.name}</div>

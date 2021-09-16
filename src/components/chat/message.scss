@@ -7,25 +7,48 @@
   padding: 5px;
 
   display: flex;
-  flex-direction: column;
 
-  .top-row {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
+  .left-col {
+    flex: 0 0 50px;
 
     .icon {
-      width: 35px;
-      height: 35px;
-    }
-
-    .name {
-      margin-right: 20px;
+      width: 40px;
+      height: 40px;
+      margin: 0;
     }
   }
 
-  .bot-row {
-    width: 100%;
+  .right-col {
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+
+    .top-row {
+      width: 100%;
+
+      display: flex;
+
+      .name {
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      .time {
+        opacity: 0.5;
+      }
+    }
+
+    .bot-row {
+      flex: 1 1 100%;
+      width: 100%;
+
+      .content {
+        p {
+          margin: 0;
+        }
+      }
+    }
   }
 }
