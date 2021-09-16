@@ -4,6 +4,7 @@
   flex: 1 1;
   width: calc(100% - $sidebarClosedWidth);
   height: 100%;
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;

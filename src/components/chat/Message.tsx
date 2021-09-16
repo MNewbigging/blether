@@ -13,10 +13,7 @@ export class Message extends React.Component<Props> {
   public render() {
     const { message } = this.props;
 
-    const time = new Date(JSON.parse(message.time));
-    const hours = time.getHours();
-    const mins = time.getMinutes();
-    const timeStr = hours + ':' + mins;
+    const timeStr = this.getTimeString();
 
     return (
       <div className={'message'}>
@@ -28,5 +25,25 @@ export class Message extends React.Component<Props> {
         <div className={'bot-row'} dangerouslySetInnerHTML={{ __html: message.content }}></div>
       </div>
     );
+  }
+
+  private getTimeString() {
+    const { message } = this.props;
+
+    const time = new Date(JSON.parse(message.time));
+    const hours = this.validateTime(time.getHours().toString());
+    const mins = this.validateTime(time.getMinutes().toString());
+
+    return hours + ':' + mins;
+  }
+
+  private validateTime(timeStr: string) {
+    // If it has length of 2, it's fine
+    if (timeStr.length === 2) {
+      return timeStr;
+    }
+
+    // Otherwise add 0 at start
+    return '0' + timeStr;
   }
 }
