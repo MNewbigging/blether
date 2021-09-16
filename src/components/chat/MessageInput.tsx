@@ -15,6 +15,12 @@ interface Props {
 
 @observer
 export class MessageInput extends React.Component<Props> {
+  componentDidMount() {
+    const { chatState } = this.props;
+
+    chatState.editorState = EditorState.moveFocusToEnd(chatState.editorState);
+  }
+
   public render() {
     const { chatState } = this.props;
 

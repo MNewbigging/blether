@@ -4,6 +4,7 @@ import { action, observable } from 'mobx';
 
 import { BletherSettings } from '../model/Settings';
 import { UserMessage } from '../model/UserMessage';
+import { TimeUtils } from '../utils/TimeUtils';
 
 export class ChatState {
   @observable public sidebarOpen = true;
@@ -45,12 +46,40 @@ export class ChatState {
     };
 
     // Add own message to message history straight away
-    this.messageHistory.push(message);
+    this.receiveMessage(message);
 
     // TODO Then send to all other participants
 
     // Then clear the editor
     this.clearEditor();
+  }
+
+  @action private receiveMessage(message: UserMessage) {
+    // Early return for first message sent (don't need to continue with other checks if so)
+    if (!this.messageHistory.length) {
+      this.messageHistory.push(message);
+      return;
+    }
+
+    // Check if this new message has same sender as last
+    const lastMsg = this.messageHistory[this.messageHistory.length - 1];
+    if (lastMsg.name === message.name) {
+      // Was it sent close to last?
+      const newMessageCutoff = 1;
+      const lastTimeStr = TimeUtils.getTimeMins(lastMsg.time);
+      const lastTime = parseInt(lastTimeStr, 10);
+
+      const curTimeStr = TimeUtils.getTimeMins(message.time);
+      const curTime = parseInt(curTimeStr, 10);
+
+      if (Math.abs(curTime - lastTime) < newMessageCutoff) {
+        // Add this message's content into the last
+        lastMsg.content += message.content;
+        return;
+      }
+    }
+
+    this.messageHistory.push(message);
   }
 
   private clearEditor() {
