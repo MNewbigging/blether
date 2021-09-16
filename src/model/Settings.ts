@@ -65,7 +65,8 @@ export class BletherSettings {
   }
 
   public getIconOptions() {
-    return Object.values(IconName);
+    const nonValidIcons = [IconName.DOOR, IconName.EXPORT, IconName.LARGER];
+    return Object.values(IconName).filter((icon) => !nonValidIcons.includes(icon));
   }
 
   @action public setData(settingsData: SettingsData) {
