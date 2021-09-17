@@ -105,6 +105,7 @@ $darkBorderColor: #dee4e7;
 
 .light::-webkit-scrollbar-thumb {
   background: $lightAccentColor;
+  border-radius: 10px;
 
   &:hover {
     background: $lightMainColor;
@@ -118,6 +119,7 @@ $darkBorderColor: #dee4e7;
 
 .dark::-webkit-scrollbar-thumb {
   background: $darkAccentColor;
+  border-radius: 10px;
   &:hover {
     background: $darkMainColor;
   }
