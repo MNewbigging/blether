@@ -1,3 +1,5 @@
+import { User } from './Settings';
+
 export enum MessageType {
   PARTICIPANTS = 'participants',
 }
@@ -7,7 +9,7 @@ export abstract class PeerMessage {
 }
 
 export class ParticipantsMessage extends PeerMessage {
-  constructor() {
+  constructor(public participants: User[]) {
     super(MessageType.PARTICIPANTS);
   }
 }

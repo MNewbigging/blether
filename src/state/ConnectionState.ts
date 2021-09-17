@@ -1,12 +1,15 @@
 import Peer from 'peerjs';
 
-import { BletherSettings } from '../model/Settings';
+import { PeerMessage } from '../model/PeerMessages';
 
 export class ConnectionState {
   public readonly self: Peer;
   private others: Peer.DataConnection[] = [];
+  private readonly isHost: boolean;
 
   constructor(hostId?: string) {
+    this.isHost = hostId ? true : false;
+
     this.self = new Peer({
       config: {
         iceServers: [
@@ -28,14 +31,14 @@ export class ConnectionState {
     this.self.on('connection', this.incomingConnection);
   }
 
-  public onreceivedata = () => {};
+  // Event callbacks to be set by ChatState
+  public onreceivedata = (message: PeerMessage) => console.log('data: ', message);
+  public onconnection = () => {};
 
   private readonly incomingConnection = (conn: Peer.DataConnection) => {
     conn.on('open', () => {
-      this.others.push(conn);
-      console.log('added new peer - all peers: ', this.others);
-
-      conn.on('data', (data: any) => this.onreceivedata());
+      this.setupConnection(conn);
+      this.onconnection();
     });
   };
 
@@ -53,7 +56,18 @@ export class ConnectionState {
       }
     };
 
-    this.incomingConnection(conn);
+    conn.on('open', () => {
+      this.setupConnection(conn);
+    });
+  }
+
+  private setupConnection(conn: Peer.DataConnection) {
+    // Save the connection
+    this.others.push(conn);
+    console.log('added new peer - all peers: ', this.others);
+
+    // Setup callback for receiving data
+    conn.on('data', (data: any) => this.onreceivedata(JSON.parse(data)));
   }
 
   private readonly onPeerError = (error: any) => {

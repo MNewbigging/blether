@@ -1,6 +1,7 @@
 import { convertToRaw, EditorState, Modifier, SelectionState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { action, observable } from 'mobx';
+import { PeerMessage } from '../model/PeerMessages';
 
 import { BletherSettings, SettingsData } from '../model/Settings';
 import { UserMessage } from '../model/UserMessage';
@@ -21,6 +22,7 @@ export class ChatState {
   constructor(settings: SettingsData, hostId?: string) {
     this.userSettings = settings;
     this.connectionState = new ConnectionState(hostId);
+    this.connectionState.onreceivedata = this.receivePeerMessage;
 
     window.addEventListener('keydown', this.onKeyDown);
   }
@@ -70,7 +72,11 @@ export class ChatState {
     this.clearEditor();
   }
 
-  @action private receiveMessage(message: UserMessage) {
+  private readonly receivePeerMessage = (message: PeerMessage) => {
+    // Query type of message
+  };
+
+  @action private readonly receiveMessage = (message: UserMessage) => {
     // Early return for first message sent (don't need to continue with other checks if so)
     if (!this.messageHistory.length) {
       this.messageHistory.push(message);
@@ -96,7 +102,7 @@ export class ChatState {
     }
 
     this.messageHistory.push(message);
-  }
+  };
 
   private clearEditor() {
     let es = this.editorState;
