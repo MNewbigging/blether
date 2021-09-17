@@ -16,7 +16,7 @@ export class UserDataMessage extends PeerMessage {
 }
 
 export class ParticipantsMessage extends PeerMessage {
-  constructor(public participants: User[]) {
+  constructor(public participants: string[]) {
     super(MessageType.PARTICIPANTS);
   }
 }

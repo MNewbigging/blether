@@ -1,7 +1,12 @@
 import { convertToRaw, EditorState, Modifier, SelectionState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { action, observable } from 'mobx';
-import { MessageType, PeerMessage, UserDataMessage } from '../model/PeerMessages';
+import {
+  MessageType,
+  ParticipantsMessage,
+  PeerMessage,
+  UserDataMessage,
+} from '../model/PeerMessages';
 
 import { SettingsData, User } from '../model/Settings';
 import { UserMessage } from '../model/UserMessage';
@@ -87,11 +92,18 @@ export class ChatState {
 
     switch (message.type) {
       case MessageType.USER_DATA:
+        // Add new incoming user to users list
         const userMsg = message as UserDataMessage;
         this.participants.push({
           name: userMsg.userData.name,
           icon: userMsg.userData.icon,
         });
+        break;
+      case MessageType.PARTICIPANTS:
+        // Connect to new users
+        const partyMsg = message as ParticipantsMessage;
+        console.log('adding party members');
+        partyMsg.participants.forEach((id) => this.connectionState.outgoingConnection(id));
         break;
     }
   };

@@ -1,6 +1,6 @@
 import Peer from 'peerjs';
 
-import { PeerMessage, UserDataMessage } from '../model/PeerMessages';
+import { ParticipantsMessage, PeerMessage, UserDataMessage } from '../model/PeerMessages';
 import { SettingsData, User } from '../model/Settings';
 
 export class ConnectionState {
@@ -44,20 +44,7 @@ export class ConnectionState {
   public onselfopen = (id: string) => {};
   public onreceivedata = (message: PeerMessage) => console.log('data: ', message);
 
-  private readonly incomingConnection = (conn: Peer.DataConnection) => {
-    conn.on('open', () => {
-      console.log(this.self.id + ' received conn: ', conn);
-      this.incomingConnections.push(conn);
-      conn.on('data', (data: any) => this.onreceivedata(JSON.parse(data)));
-
-      // If we're the host, establish a return connection to joiner
-      if (this.isHost) {
-        this.outgoingConnection(conn.peer);
-      }
-    });
-  };
-
-  private outgoingConnection(id: string) {
+  public outgoingConnection(id: string) {
     console.log('connecting to peer with id: ', id);
 
     const conn = this.self.connect(id);
@@ -82,7 +69,56 @@ export class ConnectionState {
       };
       const msg = new UserDataMessage(user);
       conn.send(JSON.stringify(msg));
+
+      // If host
+      if (this.isHost) {
+        // Now update all participants with new open connection
+        this.updateParticipants(conn.peer);
+      }
     });
+  }
+
+  private readonly incomingConnection = (conn: Peer.DataConnection) => {
+    conn.on('open', () => {
+      //console.log(this.self.id + ' received conn: ', conn);
+      this.incomingConnections.push(conn);
+      conn.on('data', (data: any) => this.onreceivedata(JSON.parse(data)));
+
+      // If we're the host,
+      if (this.isHost) {
+        // establish a return connection to joiner
+        this.outgoingConnection(conn.peer);
+      }
+    });
+  };
+
+  private updateParticipants(newId: string) {
+    // If there's only 1 other member so far, nobody else to update
+    if (this.incomingConnections.length < 2) {
+      return;
+    }
+
+    // New member needs to know about everyone other than host and themself
+    const otherMembers = this.incomingConnections
+      .filter((conn) => conn.peer !== newId)
+      .map((conn) => conn.peer);
+    const newPartyMsg = new ParticipantsMessage(otherMembers);
+    console.log('new party msg: ', newPartyMsg);
+    this.sendWhisper(newId, newPartyMsg);
+
+    // Everyone else just needs to know about new member
+    const groupPartyMsg = new ParticipantsMessage([newId]);
+    otherMembers.forEach((id) => this.sendWhisper(id, groupPartyMsg));
+  }
+
+  private sendWhisper(id: string, message: PeerMessage) {
+    const conn = this.outgoingConnections.find((conn) => conn.peer === id);
+    if (!conn) {
+      console.log('no outgoing conn for ', id);
+      return;
+    }
+
+    conn.send(JSON.stringify(message));
   }
 
   private readonly onPeerError = (error: any) => {
@@ -96,28 +132,3 @@ export class ConnectionState {
     console.warn('disconnected from other peers');
   };
 }
-
-/**
- * Joiner connects to host via invite id
- *  - on connection open, joiner sends name
- *  - on host conn open, send joiner host name
- *  - then host sends all other participants to connect to
- *
- * So on each open connection, both parties exchange names
- *
- * When host receives a new connection, he sends all members ids of all members
- * Each member receives the list and connects to any new members
- *
- * But what if two peers that don't know each other try to connect to each other
- * - does that make two separate connections between the same peers?
- * - and therefore double the name exchange?
- * ^
- * Each connection has a peer prop with the id of the peer at the other end of conn
- * On receiving a new connection, if that conn.peer already exists in conn list, ignore
- *
- * ^ OR:
- * Instead of having a single, 2-way connection between 2 peers
- * Have two 1-way connections:
- * Each member makes an outgoing connection
- * When opened, they save the connection and use it to send data
- */
