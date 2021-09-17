@@ -1,7 +1,7 @@
 import { convertToRaw, EditorState, Modifier, SelectionState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { action, observable } from 'mobx';
-import { PeerMessage } from '../model/PeerMessages';
+import { MessageType, PeerMessage, UserDataMessage } from '../model/PeerMessages';
 
 import { SettingsData, User } from '../model/Settings';
 import { UserMessage } from '../model/UserMessage';
@@ -23,9 +23,8 @@ export class ChatState {
   constructor(settings: SettingsData, hostId?: string) {
     this.userSettings = settings;
 
-    this.connectionState = new ConnectionState(hostId);
+    this.connectionState = new ConnectionState(settings, hostId);
     this.connectionState.onselfopen = this.onConnectionReady;
-    this.connectionState.onconnection = this.onConnection;
     this.connectionState.onreceivedata = this.receivePeerMessage;
 
     window.addEventListener('keydown', this.onKeyDown);
@@ -76,20 +75,25 @@ export class ChatState {
     this.clearEditor();
   }
 
-  @action private readonly onConnectionReady = (peerId: string) => {
+  @action private readonly onConnectionReady = () => {
     this.participants.push({
-      peerId,
       name: this.userSettings.name,
       icon: this.userSettings.icon,
     });
   };
 
-  private readonly onConnection = () => {
-    // Update the participants
-  };
-
   private readonly receivePeerMessage = (message: PeerMessage) => {
-    // Query type of message
+    console.log('received message: ', message);
+
+    switch (message.type) {
+      case MessageType.USER_DATA:
+        const userMsg = message as UserDataMessage;
+        this.participants.push({
+          name: userMsg.userData.name,
+          icon: userMsg.userData.icon,
+        });
+        break;
+    }
   };
 
   @action private readonly receiveMessage = (message: UserMessage) => {
