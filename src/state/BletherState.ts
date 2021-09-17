@@ -19,10 +19,13 @@ export class BletherState {
   @observable public screen = BletherScreen.HOME;
   @observable public settings = new BletherSettings();
   @observable public settingsDialogState = DialogState.CLOSED;
+  @observable public joining = false;
   public chatState?: ChatState;
+  private hostId: string | undefined;
 
   constructor() {
     this.loadSettings();
+    this.checkRoute();
   }
 
   @action public openSettings() {
@@ -42,7 +45,7 @@ export class BletherState {
   }
 
   @action public startBlether() {
-    this.chatState = new ChatState(this.settings);
+    this.chatState = new ChatState(this.settings, this.hostId);
 
     this.screen = BletherScreen.CHAT;
   }
@@ -65,5 +68,18 @@ export class BletherState {
       // No settings found; show settings dialog
       this.settingsDialogState = DialogState.OPEN;
     }
+  }
+
+  @action private checkRoute() {
+    const url = window.location.hash.split('/');
+    console.log(url);
+
+    if (url.length !== 2) {
+      return;
+    }
+
+    // Route includes a host id; save it and pass to chat state
+    this.hostId = url[1];
+    this.joining = true;
   }
 }

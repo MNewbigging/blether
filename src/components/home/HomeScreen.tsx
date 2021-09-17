@@ -11,15 +11,17 @@ import './home-screen.scss';
 interface Props {
   bState: BletherState;
 }
+
 @observer
 export class HomeScreen extends React.Component<Props> {
   public render() {
     const { bState } = this.props;
 
     const theme = bState.settings.theme;
-
     const icon = bState.settings.icon;
     const name = bState.settings.name;
+
+    const btnText = bState.joining ? 'join blether' : 'start a blether';
 
     return (
       <div className={'home-screen main-ui ' + theme}>
@@ -30,11 +32,7 @@ export class HomeScreen extends React.Component<Props> {
           <div className={'name'}>{name}</div>
         </div>
 
-        <Button
-          className={'start-button'}
-          text={'start a blether'}
-          onClick={() => bState.startBlether()}
-        />
+        <Button className={'start-button'} text={btnText} onClick={() => bState.startBlether()} />
 
         <div className={'settings'} onClick={() => bState.openSettings()}>
           settings

@@ -5,6 +5,7 @@ import { action, observable } from 'mobx';
 import { BletherSettings } from '../model/Settings';
 import { UserMessage } from '../model/UserMessage';
 import { TimeUtils } from '../utils/TimeUtils';
+import { ConnectionState } from './ConnectionState';
 
 export class ChatState {
   @observable public sidebarOpen = true;
@@ -15,14 +16,29 @@ export class ChatState {
 
   @observable public messageHistory: UserMessage[] = [];
 
-  constructor(settings: BletherSettings) {
+  public connectionState: ConnectionState;
+
+  constructor(settings: BletherSettings, hostId?: string) {
     this.userSettings = settings;
+    this.connectionState = new ConnectionState(hostId);
+
     window.addEventListener('keydown', this.onKeyDown);
   }
 
   @action public toggleSidebar() {
     // TODO - in mobile mode, cannot toggle - always false
     this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  public invite() {
+    // Create an invite link and copy to clipboard
+    const baseUrl = window.location.href;
+    const fullUrl = baseUrl + '#/' + this.connectionState.self.id;
+
+    navigator.clipboard.writeText(fullUrl);
+
+    // TODO prevent inviting if no peer setup
+    // TODO tell user text has been copied
   }
 
   @action public setEditorState(editorState: EditorState) {

@@ -33,7 +33,12 @@ export class Sidebar extends React.Component<Props> {
         <div className={'top-section'}>
           <Button text={'exit'} className={'exit-button'} onClick={() => onExit()} icon={exitBtn} />
 
-          <Button text={'invite'} className={'invite-button'} onClick={() => {}} icon={inviteBtn} />
+          <Button
+            text={'invite'}
+            className={'invite-button'}
+            onClick={() => chatState.invite()}
+            icon={inviteBtn}
+          />
         </div>
 
         <div className={'mid-section'}>{this.renderParticipants()}</div>
