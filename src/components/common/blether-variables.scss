@@ -97,3 +97,28 @@ $darkBorderColor: #dee4e7;
     }
   }
 }
+
+.light::-webkit-scrollbar {
+  width: 10px;
+  background-color: $lightSecondaryColor;
+}
+
+.light::-webkit-scrollbar-thumb {
+  background: $lightAccentColor;
+
+  &:hover {
+    background: $lightMainColor;
+  }
+}
+
+.dark::-webkit-scrollbar {
+  width: 10px;
+  background-color: $darkSecondaryColor;
+}
+
+.dark::-webkit-scrollbar-thumb {
+  background: $darkAccentColor;
+  &:hover {
+    background: $darkMainColor;
+  }
+}
