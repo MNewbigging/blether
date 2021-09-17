@@ -3,7 +3,7 @@ import draftToHtml from 'draftjs-to-html';
 import { action, observable } from 'mobx';
 import { PeerMessage } from '../model/PeerMessages';
 
-import { BletherSettings, SettingsData } from '../model/Settings';
+import { SettingsData, User } from '../model/Settings';
 import { UserMessage } from '../model/UserMessage';
 import { TimeUtils } from '../utils/TimeUtils';
 import { ConnectionState } from './ConnectionState';
@@ -18,10 +18,14 @@ export class ChatState {
   @observable public messageHistory: UserMessage[] = [];
 
   public connectionState: ConnectionState;
+  @observable public participants: User[] = [];
 
   constructor(settings: SettingsData, hostId?: string) {
     this.userSettings = settings;
+
     this.connectionState = new ConnectionState(hostId);
+    this.connectionState.onselfopen = this.onConnectionReady;
+    this.connectionState.onconnection = this.onConnection;
     this.connectionState.onreceivedata = this.receivePeerMessage;
 
     window.addEventListener('keydown', this.onKeyDown);
@@ -71,6 +75,18 @@ export class ChatState {
     // Then clear the editor
     this.clearEditor();
   }
+
+  @action private readonly onConnectionReady = (peerId: string) => {
+    this.participants.push({
+      peerId,
+      name: this.userSettings.name,
+      icon: this.userSettings.icon,
+    });
+  };
+
+  private readonly onConnection = () => {
+    // Update the participants
+  };
 
   private readonly receivePeerMessage = (message: PeerMessage) => {
     // Query type of message

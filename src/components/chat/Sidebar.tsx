@@ -3,12 +3,11 @@ import React from 'react';
 
 import { ChatState } from '../../state/ChatState';
 import { Button } from '../common/buttons/Button';
+import { IconName } from '../../model/Settings';
+import { Icon } from '../common/icon/Icon';
 
 import './sidebar.scss';
 import '../common/blether-variables.scss';
-
-import { IconName } from '../../model/Settings';
-import { Icon } from '../common/icon/Icon';
 
 interface Props {
   chatState: ChatState;
@@ -58,14 +57,11 @@ export class Sidebar extends React.Component<Props> {
   private renderParticipants() {
     const { chatState } = this.props;
 
-    // Self appears at top
-    // Only show icon if sidebar closed
-
-    return (
+    return chatState.participants.map((user) => (
       <div className={'participant'}>
-        <Icon name={chatState.userSettings.icon} interactive={false} />
-        {chatState.sidebarOpen && <div className={'name'}>{chatState.userSettings.name}</div>}
+        <Icon name={user.icon} />
+        {chatState.sidebarOpen && <div className={'name'}>{user.name}</div>}
       </div>
-    );
+    ));
   }
 }

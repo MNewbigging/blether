@@ -3,9 +3,9 @@ import Peer from 'peerjs';
 import { PeerMessage } from '../model/PeerMessages';
 
 export class ConnectionState {
+  public readonly isHost: boolean;
   public readonly self: Peer;
   private others: Peer.DataConnection[] = [];
-  private readonly isHost: boolean;
 
   constructor(hostId?: string) {
     this.isHost = hostId ? true : false;
@@ -22,7 +22,9 @@ export class ConnectionState {
     this.self.on('error', this.onPeerError);
     this.self.on('disconnected', this.onDisconnect);
 
-    this.self.on('open', (_id: string) => {
+    this.self.on('open', (id: string) => {
+      this.onselfopen(id);
+
       if (hostId) {
         this.outgoingConnection(hostId);
       }
@@ -32,8 +34,13 @@ export class ConnectionState {
   }
 
   // Event callbacks to be set by ChatState
-  public onreceivedata = (message: PeerMessage) => console.log('data: ', message);
+  public onselfopen = (id: string) => {};
   public onconnection = () => {};
+  public onreceivedata = (message: PeerMessage) => console.log('data: ', message);
+
+  public sendGroupMessage(message: PeerMessage) {
+    // stringify the message, send to all other connections
+  }
 
   private readonly incomingConnection = (conn: Peer.DataConnection) => {
     conn.on('open', () => {
