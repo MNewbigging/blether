@@ -2,7 +2,7 @@ import { convertToRaw, EditorState, Modifier, SelectionState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { action, observable } from 'mobx';
 
-import { BletherSettings } from '../model/Settings';
+import { BletherSettings, SettingsData } from '../model/Settings';
 import { UserMessage } from '../model/UserMessage';
 import { TimeUtils } from '../utils/TimeUtils';
 import { ConnectionState } from './ConnectionState';
@@ -10,7 +10,7 @@ import { ConnectionState } from './ConnectionState';
 export class ChatState {
   @observable public sidebarOpen = true;
 
-  public userSettings: BletherSettings;
+  public userSettings: SettingsData;
   @observable public editorState = EditorState.createEmpty();
   @observable public editorContent = '';
 
@@ -18,7 +18,7 @@ export class ChatState {
 
   public connectionState: ConnectionState;
 
-  constructor(settings: BletherSettings, hostId?: string) {
+  constructor(settings: SettingsData, hostId?: string) {
     this.userSettings = settings;
     this.connectionState = new ConnectionState(hostId);
 

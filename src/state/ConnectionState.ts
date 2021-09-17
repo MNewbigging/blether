@@ -1,5 +1,7 @@
 import Peer from 'peerjs';
 
+import { BletherSettings } from '../model/Settings';
+
 export class ConnectionState {
   public readonly self: Peer;
   private others: Peer.DataConnection[] = [];
@@ -14,43 +16,54 @@ export class ConnectionState {
       },
     });
 
-    this.self.on('error', (err: any) => console.log('peer error: ', err));
+    this.self.on('error', this.onPeerError);
+    this.self.on('disconnected', this.onDisconnect);
 
-    this.self.on('open', (id: string) => {
-      console.log('self open, id: ', id);
-
-      // If given a host id, connect with it
+    this.self.on('open', (_id: string) => {
       if (hostId) {
-        this.connectToPeer(hostId);
+        this.outgoingConnection(hostId);
       }
     });
 
-    this.self.on('connection', this.addNewPeer);
+    this.self.on('connection', this.incomingConnection);
   }
 
-  private readonly addNewPeer = (conn: Peer.DataConnection) => {
-    conn.on('open', () => {
-      //conn.send('hi there');
-      console.log('opened connection to conn: ', conn);
+  public onreceivedata = () => {};
 
+  private readonly incomingConnection = (conn: Peer.DataConnection) => {
+    conn.on('open', () => {
       this.others.push(conn);
       console.log('added new peer - all peers: ', this.others);
+
+      conn.on('data', (data: any) => this.onreceivedata());
     });
   };
 
-  private connectToPeer(id: string) {
+  private outgoingConnection(id: string) {
     console.log('connecting to peer with id: ', id);
 
     const conn = this.self.connect(id);
 
-    // Handle inevitable first failure
+    // Attempt to reconnect on failure
+    // TODO - stop trying after so many attempts
     conn.peerConnection.onconnectionstatechange = (_e: Event) => {
       if (conn.peerConnection.connectionState === 'failed') {
-        this.connectToPeer(id);
+        this.outgoingConnection(id);
         return;
       }
     };
 
-    this.addNewPeer(conn);
+    this.incomingConnection(conn);
   }
+
+  private readonly onPeerError = (error: any) => {
+    // Just log it for now
+    console.error('peerjs error: ', error);
+  };
+
+  private readonly onDisconnect = () => {
+    // Means self has disconnected from others
+    // TODO - test this is true!
+    console.warn('disconnected from other peers');
+  };
 }

@@ -43,6 +43,12 @@ export interface SettingsData {
   theme: BletherTheme;
 }
 
+export interface User {
+  peerId: string;
+  name: string;
+  icon: IconName;
+}
+
 export class BletherSettings {
   @observable public name = '';
   @observable public icon = IconName.BEAR;

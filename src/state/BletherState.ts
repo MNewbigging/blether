@@ -45,7 +45,7 @@ export class BletherState {
   }
 
   @action public startBlether() {
-    this.chatState = new ChatState(this.settings, this.hostId);
+    this.chatState = new ChatState(this.settings.toData(), this.hostId);
 
     this.screen = BletherScreen.CHAT;
   }
