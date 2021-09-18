@@ -9,19 +9,16 @@ import {
 } from '../model/PeerMessages';
 
 import { SettingsData, User } from '../model/Settings';
-import { UserMessage } from '../model/UserMessage';
+import { TextMessage } from '../model/TextMessage';
 import { TimeUtils } from '../utils/TimeUtils';
 import { ConnectionState } from './ConnectionState';
 
 export class ChatState {
   @observable public sidebarOpen = true;
-
   public userSettings: SettingsData;
   @observable public editorState = EditorState.createEmpty();
   @observable public editorContent = '';
-
-  @observable public messageHistory: UserMessage[] = [];
-
+  @observable public messageHistory: TextMessage[] = [];
   public connectionState: ConnectionState;
   @observable public participants: User[] = [];
 
@@ -64,7 +61,7 @@ export class ChatState {
 
   @action private sendMessage() {
     // Send editor content in a new message
-    const message: UserMessage = {
+    const message: TextMessage = {
       content: this.editorContent,
       time: JSON.stringify(Date.now()),
       name: this.userSettings.name,
@@ -102,13 +99,12 @@ export class ChatState {
       case MessageType.PARTICIPANTS:
         // Connect to new users
         const partyMsg = message as ParticipantsMessage;
-        console.log('adding party members');
         partyMsg.participants.forEach((id) => this.connectionState.outgoingConnection(id));
         break;
     }
   };
 
-  @action private readonly receiveMessage = (message: UserMessage) => {
+  @action private readonly receiveMessage = (message: TextMessage) => {
     // Early return for first message sent (don't need to continue with other checks if so)
     if (!this.messageHistory.length) {
       this.messageHistory.push(message);

@@ -1,6 +1,6 @@
 import { IconName } from './Settings';
 
-export interface UserMessage {
+export interface TextMessage {
   content: string;
   time: string;
   name: string;

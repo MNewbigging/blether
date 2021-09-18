@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import { UserMessage } from '../../model/UserMessage';
+import { TextMessage } from '../../model/TextMessage';
 import { TimeUtils } from '../../utils/TimeUtils';
 import { Icon } from '../common/icon/Icon';
 
 import './message.scss';
 
 interface Props {
-  message: UserMessage;
+  message: TextMessage;
 }
 
 @observer
