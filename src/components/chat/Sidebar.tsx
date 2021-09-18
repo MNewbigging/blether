@@ -27,17 +27,21 @@ export class Sidebar extends React.Component<Props> {
     const inviteBtn = chatState.sidebarOpen ? undefined : IconName.EXPORT;
     const toggleBtn = chatState.sidebarOpen ? undefined : IconName.LARGER;
 
+    const canInvite = chatState.connectionState.isHost;
+
     return (
       <div className={sidebarClasses.join(' ')}>
         <div className={'top-section'}>
           <Button text={'exit'} className={'exit-button'} onClick={() => onExit()} icon={exitBtn} />
 
-          <Button
-            text={'invite'}
-            className={'invite-button'}
-            onClick={() => chatState.invite()}
-            icon={inviteBtn}
-          />
+          {canInvite && (
+            <Button
+              text={'invite'}
+              className={'invite-button'}
+              onClick={() => chatState.invite()}
+              icon={inviteBtn}
+            />
+          )}
         </div>
 
         <div className={'mid-section'}>{this.renderParticipants()}</div>
