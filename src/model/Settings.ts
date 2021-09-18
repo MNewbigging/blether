@@ -44,6 +44,7 @@ export interface SettingsData {
 }
 
 export interface User {
+  peerId: string;
   name: string;
   icon: IconName;
 }

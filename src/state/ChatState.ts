@@ -70,7 +70,7 @@ export class ChatState {
     };
 
     // Add own message to message history straight away
-    this.receiveMessage(message);
+    this.receiveTextMessage(message);
 
     // TODO Then send to all other participants
     const textMsg = new UserTextMessage(message);
@@ -82,6 +82,7 @@ export class ChatState {
 
   @action private readonly onConnectionReady = () => {
     this.participants.push({
+      peerId: this.connectionState.self.id,
       name: this.userSettings.name,
       icon: this.userSettings.icon,
     });
@@ -92,12 +93,15 @@ export class ChatState {
 
     switch (message.type) {
       case MessageType.USER_DATA:
-        // Add new incoming user to users list
         const userMsg = message as UserDataMessage;
-        this.participants.push({
+        // Add new incoming user to users list
+        const user: User = {
+          peerId: userMsg.userData.peerId,
           name: userMsg.userData.name,
           icon: userMsg.userData.icon,
-        });
+        };
+        this.participants.push(user);
+        this.connectionState.announceNewParticipant(user);
         break;
       case MessageType.PARTICIPANTS:
         // Connect to new users
@@ -107,12 +111,12 @@ export class ChatState {
       case MessageType.TEXT_MESSAGE:
         // Display the received message
         const textMsg = message as UserTextMessage;
-        this.receiveMessage(textMsg.textMessage);
+        this.receiveTextMessage(textMsg.textMessage);
         break;
     }
   };
 
-  @action private readonly receiveMessage = (message: TextMessage) => {
+  @action private receiveTextMessage(message: TextMessage) {
     // Early return for first message sent (don't need to continue with other checks if so)
     if (!this.messageHistory.length) {
       this.messageHistory.push(message);
@@ -138,7 +142,7 @@ export class ChatState {
     }
 
     this.messageHistory.push(message);
-  };
+  }
 
   private clearEditor() {
     let es = this.editorState;

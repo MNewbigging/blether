@@ -1,7 +1,13 @@
 import Peer from 'peerjs';
 
-import { ParticipantsMessage, PeerMessage, UserDataMessage } from '../model/PeerMessages';
+import {
+  ParticipantsMessage,
+  PeerMessage,
+  UserDataMessage,
+  UserTextMessage,
+} from '../model/PeerMessages';
 import { SettingsData, User } from '../model/Settings';
+import { TextMessage } from '../model/TextMessage';
 
 export class ConnectionState {
   public readonly isHost: boolean;
@@ -9,6 +15,7 @@ export class ConnectionState {
   private incomingConnections: Peer.DataConnection[] = [];
   private outgoingConnections: Peer.DataConnection[] = [];
   private readonly userSettings: SettingsData;
+  private announceUser?: User;
 
   constructor(userSettings: SettingsData, hostId?: string) {
     this.userSettings = userSettings;
@@ -48,6 +55,23 @@ export class ConnectionState {
     this.outgoingConnections.forEach((conn) => conn.send(JSON.stringify(message)));
   }
 
+  public announceNewParticipant(user: User) {
+    // Only the host can do this
+    if (!this.isHost) {
+      return;
+    }
+
+    this.announceUser = user;
+
+    // Check if outgoing connection made with this new user yet
+    const exists = this.outgoingConnections.find((conn) => conn.peer === user.peerId);
+    // If made, can announce new member now
+    if (exists) {
+      this.heraldNewParticipant();
+    }
+    // Otherwise, will be announced when outgoing connection is made
+  }
+
   public outgoingConnection(id: string) {
     console.log('connecting to peer with id: ', id);
 
@@ -68,6 +92,7 @@ export class ConnectionState {
 
       // On opening a new outgoing connection, send them own user data
       const user: User = {
+        peerId: this.self.id,
         name: this.userSettings.name,
         icon: this.userSettings.icon,
       };
@@ -78,6 +103,7 @@ export class ConnectionState {
       if (this.isHost) {
         // Now update all participants with new open connection
         this.updateParticipants(conn.peer);
+        this.heraldNewParticipant();
       }
     });
   }
@@ -113,6 +139,25 @@ export class ConnectionState {
     // Everyone else just needs to know about new member
     const groupPartyMsg = new ParticipantsMessage([newId]);
     otherMembers.forEach((id) => this.sendWhisper(id, groupPartyMsg));
+  }
+
+  private heraldNewParticipant() {
+    if (!this.announceUser) {
+      return;
+    }
+
+    // Send a message to everyone as if from joiner
+    const message: TextMessage = {
+      content: ' has joined',
+      time: JSON.stringify(Date.now()),
+      name: this.announceUser.name,
+      icon: this.announceUser.icon,
+    };
+    const textMsg = new UserTextMessage(message);
+    this.sendGroupMessage(textMsg);
+    this.onreceivedata(textMsg);
+
+    this.announceUser = undefined;
   }
 
   private sendWhisper(id: string, message: PeerMessage) {
