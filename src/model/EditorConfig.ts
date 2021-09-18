@@ -1,5 +1,5 @@
 export default {
-  options: ['inline', 'emoji'],
+  options: ['inline'],
   inline: {
     inDropdown: false,
     options: ['bold', 'italic', 'underline', 'strikethrough', 'monospace'],

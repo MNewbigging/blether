@@ -44,6 +44,10 @@ export class ConnectionState {
   public onselfopen = (id: string) => {};
   public onreceivedata = (message: PeerMessage) => console.log('data: ', message);
 
+  public sendGroupMessage(message: PeerMessage) {
+    this.outgoingConnections.forEach((conn) => conn.send(JSON.stringify(message)));
+  }
+
   public outgoingConnection(id: string) {
     console.log('connecting to peer with id: ', id);
 

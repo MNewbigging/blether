@@ -6,6 +6,7 @@ import {
   ParticipantsMessage,
   PeerMessage,
   UserDataMessage,
+  UserTextMessage,
 } from '../model/PeerMessages';
 
 import { SettingsData, User } from '../model/Settings';
@@ -72,6 +73,8 @@ export class ChatState {
     this.receiveMessage(message);
 
     // TODO Then send to all other participants
+    const textMsg = new UserTextMessage(message);
+    this.connectionState.sendGroupMessage(textMsg);
 
     // Then clear the editor
     this.clearEditor();
@@ -100,6 +103,11 @@ export class ChatState {
         // Connect to new users
         const partyMsg = message as ParticipantsMessage;
         partyMsg.participants.forEach((id) => this.connectionState.outgoingConnection(id));
+        break;
+      case MessageType.TEXT_MESSAGE:
+        // Display the received message
+        const textMsg = message as UserTextMessage;
+        this.receiveMessage(textMsg.textMessage);
         break;
     }
   };
