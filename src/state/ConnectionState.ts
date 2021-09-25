@@ -197,7 +197,6 @@ export class ConnectionState {
 
   private readonly onDisconnect = () => {
     // Means self has disconnected from others
-    // TODO - test this is true!
     console.warn('disconnected from other peers');
   };
 }

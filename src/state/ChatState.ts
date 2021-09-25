@@ -32,6 +32,7 @@ export class ChatState {
     this.connectionState.onreceivedata = this.receivePeerMessage;
 
     window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('focus', this.resetTabTitle);
   }
 
   @action public toggleSidebar() {
@@ -118,6 +119,7 @@ export class ChatState {
         // Display the received message
         const textMsg = message as UserTextMessage;
         this.receiveTextMessage(textMsg.textMessage);
+        this.newMessageTabTitle();
         break;
       case MessageType.EXIT_MESSAGE:
         this.onOtherLeaving(message as ExitMessage);
@@ -190,4 +192,18 @@ export class ChatState {
 
     this.editorState = es;
   }
+
+  private newMessageTabTitle() {
+    // Update the title
+    document.title = 'blether - new message';
+
+    // If the window is currently focused, clear after 1 sec
+    if (document.hasFocus()) {
+      this.resetTabTitle();
+    }
+  }
+
+  private resetTabTitle = () => {
+    setTimeout(() => (document.title = 'blether'), 1000);
+  };
 }
