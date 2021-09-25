@@ -2,6 +2,7 @@ import { convertToRaw, EditorState, Modifier, SelectionState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { action, observable } from 'mobx';
 import {
+  ExitMessage,
   MessageType,
   ParticipantsMessage,
   PeerMessage,
@@ -49,6 +50,10 @@ export class ChatState {
     // TODO tell user text has been copied
   }
 
+  public exitChat() {
+    this.connectionState.disconnect();
+  }
+
   @action public setEditorState(editorState: EditorState) {
     this.editorState = editorState;
     this.editorContent = draftToHtml(convertToRaw(editorState.getCurrentContent()));
@@ -67,6 +72,7 @@ export class ChatState {
       time: JSON.stringify(Date.now()),
       name: this.userSettings.name,
       icon: this.userSettings.icon,
+      locked: false,
     };
 
     // Add own message to message history straight away
@@ -113,6 +119,9 @@ export class ChatState {
         const textMsg = message as UserTextMessage;
         this.receiveTextMessage(textMsg.textMessage);
         break;
+      case MessageType.EXIT_MESSAGE:
+        this.onOtherLeaving(message as ExitMessage);
+        break;
     }
   };
 
@@ -133,8 +142,9 @@ export class ChatState {
 
       const curTimeStr = TimeUtils.getTimeMins(message.time);
       const curTime = parseInt(curTimeStr, 10);
+      const recent = Math.abs(curTime - lastTime) < newMessageCutoff;
 
-      if (Math.abs(curTime - lastTime) < newMessageCutoff) {
+      if (recent && !lastMsg.locked) {
         // Add this message's content into the last
         lastMsg.content += message.content;
         return;
@@ -142,6 +152,24 @@ export class ChatState {
     }
 
     this.messageHistory.push(message);
+  }
+
+  private onOtherLeaving(exitMsg: ExitMessage) {
+    // Add a text message to say they left (no need to send it, everyone does this)
+    const text: TextMessage = {
+      content: ' has left',
+      time: JSON.stringify(Date.now()),
+      name: exitMsg.userData.name,
+      icon: exitMsg.userData.icon,
+      locked: true,
+    };
+    this.receiveTextMessage(text);
+
+    // Remove their user object
+    this.participants = this.participants.filter((user) => user.peerId !== exitMsg.userData.peerId);
+
+    // Cleanup connections with leaver
+    this.connectionState.cleanupConnections(exitMsg.userData.peerId);
   }
 
   private clearEditor() {

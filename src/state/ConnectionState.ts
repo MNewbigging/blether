@@ -1,6 +1,7 @@
 import Peer from 'peerjs';
 
 import {
+  ExitMessage,
   ParticipantsMessage,
   PeerMessage,
   UserDataMessage,
@@ -70,6 +71,24 @@ export class ConnectionState {
       this.heraldNewParticipant();
     }
     // Otherwise, will be announced when outgoing connection is made
+  }
+
+  public disconnect() {
+    console.log('disconnecting...');
+    // Send a leaving message to everyone so they know to cleanup their connections to the leaver
+    const msg = new ExitMessage({
+      peerId: this.self.id,
+      name: this.userSettings.name,
+      icon: this.userSettings.icon,
+    });
+    this.sendGroupMessage(msg);
+
+    //setTimeout(() => this.self.destroy(), 0);
+  }
+
+  public cleanupConnections(peerId: string) {
+    this.incomingConnections = this.incomingConnections.filter((conn) => conn.peer !== peerId);
+    this.outgoingConnections = this.outgoingConnections.filter((conn) => conn.peer !== peerId);
   }
 
   public outgoingConnection(id: string) {
@@ -152,6 +171,7 @@ export class ConnectionState {
       time: JSON.stringify(Date.now()),
       name: this.announceUser.name,
       icon: this.announceUser.icon,
+      locked: true,
     };
     const textMsg = new UserTextMessage(message);
     this.sendGroupMessage(textMsg);

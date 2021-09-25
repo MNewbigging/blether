@@ -5,4 +5,5 @@ export interface TextMessage {
   time: string;
   name: string;
   icon: IconName;
+  locked: boolean;
 }

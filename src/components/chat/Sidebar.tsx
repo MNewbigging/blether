@@ -32,7 +32,16 @@ export class Sidebar extends React.Component<Props> {
     return (
       <div className={sidebarClasses.join(' ')}>
         <div className={'top-section'}>
-          <Button text={'exit'} className={'exit-button'} onClick={() => onExit()} icon={exitBtn} />
+          <Button
+            text={'exit'}
+            className={'exit-button'}
+            onClick={() => {
+              // Perform peer cleanup before leaving page
+              chatState.exitChat();
+              onExit();
+            }}
+            icon={exitBtn}
+          />
 
           {canInvite && (
             <Button

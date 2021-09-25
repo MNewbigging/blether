@@ -5,6 +5,7 @@ export enum MessageType {
   PARTICIPANTS = 'participants',
   USER_DATA = 'user-data',
   TEXT_MESSAGE = 'text-message',
+  EXIT_MESSAGE = 'exit-message',
 }
 
 export abstract class PeerMessage {
@@ -26,5 +27,11 @@ export class ParticipantsMessage extends PeerMessage {
 export class UserTextMessage extends PeerMessage {
   constructor(public textMessage: TextMessage) {
     super(MessageType.TEXT_MESSAGE);
+  }
+}
+
+export class ExitMessage extends PeerMessage {
+  constructor(public userData: User) {
+    super(MessageType.EXIT_MESSAGE);
   }
 }
