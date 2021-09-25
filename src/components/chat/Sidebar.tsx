@@ -27,7 +27,7 @@ export class Sidebar extends React.Component<Props> {
     const inviteBtn = chatState.sidebarOpen ? undefined : IconName.EXPORT;
     const toggleBtn = chatState.sidebarOpen ? undefined : IconName.LARGER;
 
-    const canInvite = chatState.connectionState.isHost;
+    const canInvite = chatState.canInvite;
 
     return (
       <div className={sidebarClasses.join(' ')}>

@@ -17,6 +17,7 @@ import { ConnectionState } from './ConnectionState';
 
 export class ChatState {
   @observable public sidebarOpen = true;
+  @observable public canInvite = false;
   public userSettings: SettingsData;
   @observable public editorState = EditorState.createEmpty();
   @observable public editorContent = '';
@@ -94,7 +95,9 @@ export class ChatState {
       icon: this.userSettings.icon,
     };
 
-    for (let i = 0; i < 30; i++) this.participants.push(self);
+    this.participants.push(self);
+
+    this.canInvite = this.connectionState.isHost;
   };
 
   private readonly receivePeerMessage = (message: PeerMessage) => {
