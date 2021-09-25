@@ -14,6 +14,7 @@ import { SettingsData, User } from '../model/Settings';
 import { TextMessage } from '../model/TextMessage';
 import { TimeUtils } from '../utils/TimeUtils';
 import { ConnectionState } from './ConnectionState';
+import { ToastState } from './ToastState';
 
 export class ChatState {
   @observable public sidebarOpen = true;
@@ -24,6 +25,7 @@ export class ChatState {
   @observable public messageHistory: TextMessage[] = [];
   public connectionState: ConnectionState;
   @observable public participants: User[] = [];
+  public toastState = new ToastState();
 
   constructor(settings: SettingsData, hostId?: string) {
     this.userSettings = settings;
@@ -48,8 +50,7 @@ export class ChatState {
 
     navigator.clipboard.writeText(fullUrl);
 
-    // TODO prevent inviting if no peer setup
-    // TODO tell user text has been copied
+    this.toastState.showInviteCopiedToast();
   }
 
   public exitChat() {

@@ -1,0 +1,34 @@
+@import '../blether-variables.scss';
+
+.toast {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: fit-content;
+  box-sizing: border-box;
+  padding: 20px;
+  font-family: $regularTextFont;
+  border-radius: $borderRadius;
+
+  &.light {
+    border: 1px solid $lightMainTextColor;
+  }
+
+  &.enter {
+    transition: all 0.5s $animInCurve;
+    transform: translateY(0px);
+  }
+
+  &.exit {
+    transition: all 0.8s $animOutCurve;
+    transform: translateY(-500px);
+  }
+
+  &.hidden {
+    transform: translateY(-1000px);
+  }
+}

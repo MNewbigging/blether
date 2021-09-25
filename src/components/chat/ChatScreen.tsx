@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import { BletherSettings } from '../../model/Settings';
 import { ChatState } from '../../state/ChatState';
 import { MessagePanel } from './MessagePanel';
 import { Sidebar } from './Sidebar';
+import { Toast } from '../common/toast/Toast';
 
 import './chat-screen.scss';
 
@@ -20,6 +20,7 @@ export class ChatScreen extends React.Component<Props> {
 
     return (
       <div className={'chat-screen'}>
+        <Toast toastState={chatState.toastState} theme={chatState.userSettings.theme} />
         <Sidebar chatState={chatState} onExit={() => onExit()} />
         <MessagePanel chatState={chatState} />
       </div>

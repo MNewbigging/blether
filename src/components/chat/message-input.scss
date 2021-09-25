@@ -1,6 +1,5 @@
 @import '../common/blether-variables.scss';
 
-$inputBordeRadius: 5px;
 $toolbarHeight: 30px;
 
 .message-input {
@@ -27,7 +26,7 @@ $toolbarHeight: 30px;
     border: none;
     box-sizing: border-box;
     padding-left: 10px;
-    border-radius: $inputBordeRadius $inputBordeRadius 0px 0px;
+    border-radius: $borderRadius $borderRadius 0px 0px;
   }
 
   .editor {
@@ -36,7 +35,7 @@ $toolbarHeight: 30px;
     box-sizing: border-box;
     padding: 10px;
     font-family: $regularTextFont;
-    border-radius: 0px 0px $inputBordeRadius $inputBordeRadius;
+    border-radius: 0px 0px $borderRadius $borderRadius;
   }
 
   .rdw-emoji-modal {
