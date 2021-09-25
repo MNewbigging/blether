@@ -72,7 +72,6 @@ export class BletherState {
 
   @action private checkRoute() {
     const url = window.location.hash.split('/');
-    console.log(url);
 
     if (url.length !== 2) {
       return;

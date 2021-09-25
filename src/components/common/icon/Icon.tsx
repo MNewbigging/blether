@@ -15,10 +15,19 @@ export const Icon: React.FC<Props> = observer(({ name, interactive, onClick }) =
   const interactiveClass = isInteractive ? 'interactive' : '';
   const classNames = ['icon', name, interactiveClass];
 
+  let baseUrl = window.location.origin;
+  if (baseUrl.includes('localhost')) {
+    baseUrl += '/dist/icons/';
+  } else {
+    baseUrl += '/blether/icons/';
+  }
+
+  console.log('image base path: ' + baseUrl);
+
   return (
     <div
       className={classNames.join(' ')}
-      style={{ backgroundImage: 'url(src/assets/icons/' + name + '.png' }}
+      style={{ backgroundImage: `url(${baseUrl}` + name + '.png' }}
       onClick={() => {
         if (onClick) {
           onClick();
