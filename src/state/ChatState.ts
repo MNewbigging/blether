@@ -88,11 +88,13 @@ export class ChatState {
   }
 
   @action private readonly onConnectionReady = () => {
-    this.participants.push({
+    const self: User = {
       peerId: this.connectionState.self.id,
       name: this.userSettings.name,
       icon: this.userSettings.icon,
-    });
+    };
+
+    for (let i = 0; i < 30; i++) this.participants.push(self);
   };
 
   private readonly receivePeerMessage = (message: PeerMessage) => {

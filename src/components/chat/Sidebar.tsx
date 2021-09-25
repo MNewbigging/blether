@@ -53,7 +53,7 @@ export class Sidebar extends React.Component<Props> {
           )}
         </div>
 
-        <div className={'mid-section'}>{this.renderParticipants()}</div>
+        <div className={'mid-section ' + theme}>{this.renderParticipants()}</div>
 
         <div className={'bot-section'}>
           <Button
